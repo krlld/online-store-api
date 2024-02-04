@@ -1,25 +1,40 @@
 package by.kirilldikun.onlinestoreapi.exceptions.handler;
 
 import by.kirilldikun.onlinestoreapi.dto.ErrorResponse;
-import by.kirilldikun.onlinestoreapi.exceptions.CategoryAlreadyExistsException;
-import by.kirilldikun.onlinestoreapi.exceptions.CategoryNotFoundException;
+import by.kirilldikun.onlinestoreapi.exceptions.AlreadyExistsException;
+import by.kirilldikun.onlinestoreapi.exceptions.NotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(CategoryAlreadyExistsException.class)
-    public ErrorResponse handleProjectAlreadyExistsException(CategoryAlreadyExistsException e) {
-        return new ErrorResponse(e.getMessage());
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        log.warn(e.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse("VALIDATION_FAILED", "The request was not validated");
+        e.getBindingResult().getFieldErrors()
+                .forEach(fieldError -> errorResponse.addField(fieldError.getField(), fieldError.getDefaultMessage()));
+        return errorResponse;
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(CategoryNotFoundException.class)
-    public ErrorResponse handleProjectAlreadyExistsException(CategoryNotFoundException e) {
-        return new ErrorResponse(e.getMessage());
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ErrorResponse handleProjectAlreadyExistsException(AlreadyExistsException e) {
+        log.warn(e.getMessage());
+        return new ErrorResponse("RESOURCE_ALREADY_EXISTS", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public ErrorResponse handleProjectAlreadyExistsException(NotFoundException e) {
+        log.warn(e.getMessage());
+        return new ErrorResponse("RESOURCE_NOT_FOUND", e.getMessage());
     }
 }
