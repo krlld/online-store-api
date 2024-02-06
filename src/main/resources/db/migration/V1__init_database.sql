@@ -7,12 +7,14 @@ CREATE TABLE categories
 
 CREATE TABLE products
 (
-    id          BIGSERIAL PRIMARY KEY,
-    name        TEXT    NOT NULL,
-    price       DECIMAL NOT NULL,
-    description TEXT    NOT NULL,
-    category_id BIGINT  NOT NULL,
-    is_deleted  BOOLEAN NOT NULL DEFAULT FALSE,
+    id             BIGSERIAL PRIMARY KEY,
+    name           TEXT    NOT NULL,
+    price          DECIMAL NOT NULL,
+    description    TEXT    NOT NULL,
+    average_rating DECIMAL NOT NULL,
+    total_reviews  INT     NOT NULL,
+    category_id    BIGINT  NOT NULL,
+    is_deleted     BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (category_id) REFERENCES categories (id)
 );
 
@@ -110,10 +112,11 @@ CREATE TABLE order_items
     FOREIGN KEY (product_id) REFERENCES products (id)
 );
 
-CREATE TABLE comments
+CREATE TABLE reviews
 (
     id         BIGSERIAL PRIMARY KEY,
     content    TEXT        NOT NULL,
+    rating     INT         NOT NULL,
     created_at TIMESTAMPTZ NOT NULL,
     user_id    BIGINT      NOT NULL,
     product_id BIGINT      NOT NULL,
