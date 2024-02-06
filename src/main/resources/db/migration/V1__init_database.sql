@@ -11,8 +11,8 @@ CREATE TABLE products
     name           TEXT    NOT NULL,
     price          DECIMAL NOT NULL,
     description    TEXT    NOT NULL,
-    average_rating DECIMAL NOT NULL,
-    total_reviews  INT     NOT NULL,
+    average_rating DECIMAL NOT NULL DEFAULT 0,
+    total_reviews  INT     NOT NULL DEFAULT 0,
     category_id    BIGINT  NOT NULL,
     is_deleted     BOOLEAN NOT NULL DEFAULT FALSE,
     FOREIGN KEY (category_id) REFERENCES categories (id)
