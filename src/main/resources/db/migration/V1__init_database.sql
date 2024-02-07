@@ -18,13 +18,14 @@ CREATE TABLE products
     FOREIGN KEY (category_id) REFERENCES categories (id)
 );
 
-CREATE TABLE products_price_changes
+CREATE TABLE price_change_history
 (
     id           BIGSERIAL PRIMARY KEY,
-    price_before DECIMAL NOT NULL,
-    price_after  DECIMAL NOT NULL,
-    product_id   BIGINT  NOT NULL,
-    is_deleted   BOOLEAN NOT NULL DEFAULT FALSE,
+    price_before DECIMAL     NOT NULL,
+    price_after  DECIMAL     NOT NULL,
+    change_data  TIMESTAMPTZ NOT NULL,
+    product_id   BIGINT      NOT NULL,
+    is_deleted   BOOLEAN     NOT NULL DEFAULT FALSE,
     FOREIGN KEY (product_id) REFERENCES products (id)
 );
 
