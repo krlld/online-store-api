@@ -23,8 +23,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<CategoryDto> findAll(Pageable pageable) {
-        return categoryRepository.findAll(pageable)
+    public Page<CategoryDto> findAll(String query, Pageable pageable) {
+        return categoryRepository.findAllByNameContainingIgnoreCase(query, pageable)
                 .map(categoryMapper::toCategoryDto);
     }
 
