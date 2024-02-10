@@ -42,7 +42,8 @@ public class ProductController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProductDto update(@PathVariable Long id, @Valid @RequestBody ProductDto productDto) {
-        return productService.update(id, productDto);
+        productDto.setId(id);
+        return productService.save(productDto);
     }
 
     @DeleteMapping("/{id}")

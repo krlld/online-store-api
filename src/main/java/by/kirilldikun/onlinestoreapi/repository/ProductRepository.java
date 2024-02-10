@@ -13,8 +13,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findAllByNameContainingIgnoreCase(String query, Pageable pageable);
 
-    boolean existsByName(String name);
-
     Optional<Product> findByName(String name);
 
     @Modifying

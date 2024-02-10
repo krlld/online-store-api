@@ -35,14 +35,15 @@ public class CategoryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryDto save(@Valid @RequestBody CategoryDto categoryDTO) {
-        return categoryService.save(categoryDTO);
+    public CategoryDto save(@Valid @RequestBody CategoryDto categoryDto) {
+        return categoryService.save(categoryDto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CategoryDto update(@PathVariable Long id, @Valid @RequestBody CategoryDto categoryDTO) {
-        return categoryService.update(id, categoryDTO);
+    public CategoryDto update(@PathVariable Long id, @Valid @RequestBody CategoryDto categoryDto) {
+        categoryDto.setId(id);
+        return categoryService.save(categoryDto);
     }
 
     @DeleteMapping("/{id}")
