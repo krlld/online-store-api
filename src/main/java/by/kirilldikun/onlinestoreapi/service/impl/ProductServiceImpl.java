@@ -48,7 +48,6 @@ public class ProductServiceImpl implements ProductService {
             throw new AlreadyExistsException("Product with name: %s already exists".formatted(productDto.getName()));
         }
         Product product = productMapper.toProduct(productDto);
-        System.out.println(product.getCategoryId());
         productRepository.save(product);
         List<ImageDto> imageDtos = imageService.saveProductImages(productDto.getImages(), product.getId());
         return productMapper.toProductDto(product).setImages(imageDtos);

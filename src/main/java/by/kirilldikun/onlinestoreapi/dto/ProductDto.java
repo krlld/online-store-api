@@ -1,5 +1,6 @@
 package by.kirilldikun.onlinestoreapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class ProductDto {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @NotBlank
@@ -23,8 +25,10 @@ public class ProductDto {
     @NotBlank
     private String description;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private BigDecimal averageRating;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Integer totalReviews;
 
     @NotNull
@@ -32,4 +36,7 @@ public class ProductDto {
 
     @NotNull
     private Long categoryId;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String categoryName;
 }

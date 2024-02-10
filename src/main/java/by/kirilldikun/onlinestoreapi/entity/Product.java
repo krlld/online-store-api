@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,6 +15,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -39,7 +42,11 @@ public class Product {
     @Column(insertable = false, updatable = false)
     private Integer totalReviews;
 
-    private Long categoryId;
+    @ManyToOne
+    private Category category;
+
+    @OneToMany(mappedBy = "productId")
+    private List<Image> images;
 
     @Column(insertable = false, updatable = false)
     private Boolean isDeleted;
