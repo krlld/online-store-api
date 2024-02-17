@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -28,35 +29,21 @@ public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
 
     @Bean
-    @SuppressWarnings("removal")
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll()
-                        .anyRequest().authenticated())
-                .httpBasic()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+                        .requestMatchers(new AntPathRequestMatcher("/auth/**", "POST")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/categories", "GET")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/products", "GET")).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(configurer -> configurer
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .cors()
-                .and()
+                .cors(Customizer.withDefaults())
                 .build();
-//                .authorizeHttpRequests(requests -> requests
-//                        .requestMatchers(new AntPathRequestMatcher("/auth/**", "POST")).permitAll()
-//                        .requestMatchers(new AntPathRequestMatcher("/categories", "GET")).permitAll()
-//                        .requestMatchers(new AntPathRequestMatcher("/products", "GET")).permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .sessionManagement(configurer -> configurer
-//                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authenticationProvider(authenticationProvider())
-//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-//                .cors(Customizer.withDefaults())
-//                .build();
     }
 
     @Bean
