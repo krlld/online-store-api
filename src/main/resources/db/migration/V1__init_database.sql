@@ -66,7 +66,6 @@ CREATE TABLE favorite_items
 (
     user_id    BIGINT,
     product_id BIGINT,
-    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (user_id, product_id),
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (product_id) REFERENCES products (id)
@@ -76,8 +75,7 @@ CREATE TABLE cart_items
 (
     user_id    BIGINT,
     product_id BIGINT,
-    quantity   INT     NOT NULL,
-    is_deleted BOOLEAN NOT NULL DEFAULT FALSE,
+    quantity   INT NOT NULL,
     PRIMARY KEY (user_id, product_id),
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (product_id) REFERENCES products (id)
