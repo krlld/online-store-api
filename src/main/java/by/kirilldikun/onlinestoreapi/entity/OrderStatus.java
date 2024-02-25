@@ -11,13 +11,13 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "order_statuses")
 @Where(clause = "is_deleted = false")
 @Getter
 @Setter
 @Accessors(chain = true)
 @EqualsAndHashCode
-public class Role {
+public class OrderStatus {
 
     @Id
     private String name;
