@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -35,8 +37,10 @@ public class Order {
     @ManyToOne
     private User user;
 
-    @ManyToOne
-    private OrderStatus orderStatus;
+    private String orderStatusName;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems;
 
     @Column(insertable = false, updatable = false)
     private Boolean isDeleted;

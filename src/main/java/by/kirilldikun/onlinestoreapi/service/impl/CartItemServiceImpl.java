@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,6 +29,18 @@ public class CartItemServiceImpl implements CartItemService {
     private final ProductRepository productRepository;
 
     private final CartItemMapper cartItemMapper;
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CartItemDto> findAllByUserId(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new NotFoundException("User with id: %d not found".formatted(userId));
+        }
+        return cartItemRepository.findAllByIdUserId(userId)
+                .stream()
+                .map(cartItemMapper::toCartItemDto)
+                .toList();
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -75,5 +88,14 @@ public class CartItemServiceImpl implements CartItemService {
             throw new NotFoundException("Cart item with user id: %d and product id: %d not found"
                     .formatted(userId, productId));
         }
+    }
+
+    @Override
+    @Transactional
+    public void clear(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new NotFoundException("User with id: %d not found".formatted(userId));
+        }
+        cartItemRepository.deleteAllByIdUserId(userId);
     }
 }
