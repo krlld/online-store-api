@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
@@ -36,6 +37,9 @@ public class ProductDto {
 
     @NotNull
     private Long categoryId;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private ZonedDateTime createdAt;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String categoryName;

@@ -8,13 +8,14 @@ CREATE TABLE categories
 CREATE TABLE products
 (
     id             BIGSERIAL PRIMARY KEY,
-    name           TEXT    NOT NULL,
-    price          DECIMAL NOT NULL,
-    description    TEXT    NOT NULL,
-    average_rating DECIMAL NOT NULL DEFAULT 0,
-    total_reviews  INT     NOT NULL DEFAULT 0,
-    category_id    BIGINT  NOT NULL,
-    is_deleted     BOOLEAN NOT NULL DEFAULT FALSE,
+    name           TEXT        NOT NULL,
+    price          DECIMAL     NOT NULL,
+    description    TEXT        NOT NULL,
+    average_rating DECIMAL     NOT NULL DEFAULT 0,
+    total_reviews  INT         NOT NULL DEFAULT 0,
+    category_id    BIGINT      NOT NULL,
+    created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    is_deleted     BOOLEAN     NOT NULL DEFAULT FALSE,
     FOREIGN KEY (category_id) REFERENCES categories (id)
 );
 

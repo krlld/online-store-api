@@ -15,6 +15,7 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.Where;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Entity
@@ -47,6 +48,9 @@ public class Product {
 
     @OneToMany(mappedBy = "productId")
     private List<Image> images;
+
+    @Column(insertable = false, updatable = false)
+    private ZonedDateTime createdAt;
 
     @Column(insertable = false, updatable = false)
     private Boolean isDeleted;
