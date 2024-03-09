@@ -5,7 +5,7 @@ import by.kirilldikun.onlinestoreapi.entity.FavoriteItem;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(uses = ProductMapper.class)
 public interface FavoriteItemMapper {
 
     @Mapping(source = "id.userId", target = "userId")
