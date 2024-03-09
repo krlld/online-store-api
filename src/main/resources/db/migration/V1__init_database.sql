@@ -117,7 +117,7 @@ CREATE TABLE reviews
     id         BIGSERIAL PRIMARY KEY,
     content    TEXT        NOT NULL,
     rating     INT         NOT NULL,
-    created_at TIMESTAMPTZ NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     user_id    BIGINT      NOT NULL,
     product_id BIGINT      NOT NULL,
     is_deleted BOOLEAN     NOT NULL DEFAULT FALSE,
