@@ -8,6 +8,8 @@ public interface ProductService {
 
     Page<ProductDto> findAll(String query, Pageable pageable);
 
+    ProductDto findById(Long id);
+
     ProductDto save(ProductDto productDto);
 
     void delete(Long id);

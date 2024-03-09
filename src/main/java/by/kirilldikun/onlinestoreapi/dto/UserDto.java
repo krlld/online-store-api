@@ -1,5 +1,12 @@
 package by.kirilldikun.onlinestoreapi.dto;
 
-public record UserDto() {
+import java.util.List;
+
+public record UserDto(
+        Long id,
+        String email,
+        String name,
+        List<String> roles
+) {
 
 }

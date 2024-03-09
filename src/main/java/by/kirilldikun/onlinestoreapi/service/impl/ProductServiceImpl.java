@@ -40,6 +40,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public ProductDto findById(Long id) {
+        return productRepository.findById(id)
+                .map(productMapper::toProductDto)
+                .orElseThrow(() -> new NotFoundException("Product with id: %d not found".formatted(id)));
+    }
+
+    @Override
     @Transactional
     public ProductDto save(ProductDto productDto) {
         Long categoryId = productDto.getCategoryId();
