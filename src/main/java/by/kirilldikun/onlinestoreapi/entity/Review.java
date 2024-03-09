@@ -32,6 +32,7 @@ public class Review {
 
     private Integer rating;
 
+    @Column(insertable = false, updatable = false)
     private ZonedDateTime createdAt;
 
     @ManyToOne
