@@ -2,6 +2,7 @@ package by.kirilldikun.onlinestoreapi.exceptions.handler;
 
 import by.kirilldikun.onlinestoreapi.dto.ErrorResponse;
 import by.kirilldikun.onlinestoreapi.exceptions.AlreadyExistsException;
+import by.kirilldikun.onlinestoreapi.exceptions.EmptyCartException;
 import by.kirilldikun.onlinestoreapi.exceptions.IllegalCartItemQuantityException;
 import by.kirilldikun.onlinestoreapi.exceptions.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -34,15 +35,22 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
-    public ErrorResponse handleProjectAlreadyExistsException(NotFoundException e) {
+    public ErrorResponse handleNotFoundException(NotFoundException e) {
         log.warn(e.getMessage());
         return new ErrorResponse("RESOURCE_NOT_FOUND", e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalCartItemQuantityException.class)
-    public ErrorResponse handleProjectAlreadyExistsException(IllegalCartItemQuantityException e) {
+    public ErrorResponse handleIllegalCartItemQuantityException(IllegalCartItemQuantityException e) {
         log.warn(e.getMessage());
         return new ErrorResponse("ILLEGAL_PARAMETER", e.getMessage());
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(EmptyCartException.class)
+    public ErrorResponse handleEmptyCartException(EmptyCartException e) {
+        log.warn(e.getMessage());
+        return new ErrorResponse("ILLEGAL_STATE", e.getMessage());
     }
 }
