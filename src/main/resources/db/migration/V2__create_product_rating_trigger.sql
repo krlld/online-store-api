@@ -11,7 +11,7 @@ BEGIN
     WHERE product_id = NEW.product_id;
 
     IF new_total_reviews > 0 THEN
-        SELECT SUM(rating) / new_total_reviews
+        SELECT SUM(rating) * 1.0 / new_total_reviews
         INTO new_average_rating
         FROM reviews
         WHERE product_id = NEW.product_id;
