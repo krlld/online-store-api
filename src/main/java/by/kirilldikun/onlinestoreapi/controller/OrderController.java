@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,18 +30,21 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping(FETCH_USER_ORDERS_MAPPING)
     @ResponseStatus(HttpStatus.OK)
     public Page<OrderDto> findAllByUserId(@PathVariable Long userId, Pageable pageable) {
         return orderService.findAllByUserId(userId, pageable);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping(CREATE_ORDER_MAPPING)
     @ResponseStatus(HttpStatus.CREATED)
     public OrderDto createOrderFromUserCart(@Valid @RequestBody OrderDto orderDto) {
         return orderService.createOrderFromUserCart(orderDto);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PatchMapping(CONFIRM_DELIVERY_MAPPING)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void confirmDelivery(@PathVariable Long orderId) {
