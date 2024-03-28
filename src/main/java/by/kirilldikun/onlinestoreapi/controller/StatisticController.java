@@ -17,9 +17,15 @@ public class StatisticController {
 
     private final StatisticService statisticService;
 
-    @GetMapping(value = "price-history/{productId}", produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(value = "/price-history/{productId}", produces = MediaType.IMAGE_PNG_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public byte[] getPriceHistory(@PathVariable Long productId) {
         return statisticService.createPriceChart(productId);
+    }
+
+    @GetMapping(value = "/categories-revenue", produces = MediaType.IMAGE_PNG_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public byte[] getCategoryRevenue() {
+        return statisticService.createCategoriesRevenue();
     }
 }
