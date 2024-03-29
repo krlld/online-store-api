@@ -11,7 +11,11 @@ import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    Page<Product> findAllByNameContainingIgnoreCase(String query, Pageable pageable);
+    @Query("""
+            FROM Product p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :query, '%')) OR
+            LOWER(p.description) LIKE LOWER(CONCAT('%', :query, '%'))
+             """)
+    Page<Product> findAllByQuery(String query, Pageable pageable);
 
     Optional<Product> findByName(String name);
 

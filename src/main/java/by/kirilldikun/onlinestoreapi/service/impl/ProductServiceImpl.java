@@ -35,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public Page<ProductDto> findAll(String query, Pageable pageable) {
-        return productRepository.findAllByNameContainingIgnoreCase(query, pageable)
+        return productRepository.findAllByQuery(query, pageable)
                 .map(productMapper::toProductDto);
     }
 
