@@ -4,5 +4,7 @@ public interface StatisticService {
 
     byte[] createPriceChart(Long productId);
 
-    byte[] createCategoriesRevenue();
+    byte[] createCategoriesRevenueChart();
+
+    byte[] createUsersExpensesChart(int limit);
 }
