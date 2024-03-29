@@ -35,6 +35,7 @@ public class StatisticController {
         return statisticService.createCategoriesRevenueChart();
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping(value = "/users-expenses", produces = MediaType.IMAGE_PNG_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public byte[] getUsersExpenses(@RequestParam(defaultValue = "5") @Range(min = 1, max = 100) Integer limit) {
